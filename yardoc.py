@@ -107,17 +107,35 @@ class YardocCommand(sublime_plugin.TextCommand):
         # includes all operator methods as per http://stackoverflow.com/a/10542599/120818
         method_name = re.search("def (?P<name>[a-zA-Z_][a-zA-Z_0-9]+[!?=]?|~|\+|\*\*|-|\*|/|%|<<|>>|&|\||\^|<=>|<|<=|=>|>|==|===|!=|=~|!~|!|\[\]=|\[\])", current_line).group("name")
         lines = []
+
+        # method description
         if(self.settings.get('initial_empty_line')):
             lines.append("#" + self.trailing_spaces)
         lines.append("# ${1:[%s description]}" % (method_name))
+        lines.append("#" + self.trailing_spaces)
 
+        # @example
+        params_str = ', '.join(params)
+        if len(params) != 0:
+            params_str = '(' + params_str + ')'
+
+        lines.append("# @example${1: %s usage}" % (method_name))
+        lines.append("#   ${1:%s%s # =>}" % (method_name, params_str))
+        lines.append("#" + self.trailing_spaces)
+
+        # @param list
         for param in params:
             lines.append("# @param %s [${1:type}] ${1:[description]}" % (param))
 
-        lines.append("#" + self.trailing_spaces)
+        if len(params) > 0:
+            lines.append("#" + self.trailing_spaces)
+
+        # @return
         lines.append("# @return [${1:type}] ${1:[description]}")
         lines.append("#" + self.trailing_spaces)
-        lines.append("# @api ${1:private}")
+
+        # @api
+        lines.append("# @api ${1:public}")
         if(self.settings.get('trailing_empty_line')):
             lines.append("#" + self.trailing_spaces)
 
