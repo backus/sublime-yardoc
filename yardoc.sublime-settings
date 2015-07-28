@@ -4,5 +4,7 @@
     // Add an initial empty line at the beginning of the comment
     "initial_empty_line": true,
     // Add an empty line at the end of the comment
-    "trailing_empty_line": false
+    "trailing_empty_line": false,
+    // Include author
+    "include_author": false
 }
