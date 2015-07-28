@@ -116,6 +116,8 @@ class YardocCommand(sublime_plugin.TextCommand):
 
         lines.append("#" + self.trailing_spaces)
         lines.append("# @return [${1:type}] ${1:[description]}")
+        lines.append("#" + self.trailing_spaces)
+        lines.append("# @api ${1:private}")
         if(self.settings.get('trailing_empty_line')):
             lines.append("#" + self.trailing_spaces)
 
