@@ -114,15 +114,6 @@ class YardocCommand(sublime_plugin.TextCommand):
         lines.append("# ${1:[%s description]}" % (method_name))
         lines.append("#" + self.trailing_spaces)
 
-        # @example
-        params_str = ', '.join(params)
-        if len(params) != 0:
-            params_str = '(' + params_str + ')'
-
-        lines.append("# @example${1: %s usage}" % (method_name))
-        lines.append("#   ${1:%s%s # =>}" % (method_name, params_str))
-        lines.append("#" + self.trailing_spaces)
-
         # @param list
         for param in params:
             lines.append("# @param %s [${1:type}] ${1:[description]}" % (param))
@@ -135,7 +126,7 @@ class YardocCommand(sublime_plugin.TextCommand):
         lines.append("#" + self.trailing_spaces)
 
         # @api
-        lines.append("# @api ${1:public}")
+        lines.append("# @api ${1:private}")
         if(self.settings.get('trailing_empty_line')):
             lines.append("#" + self.trailing_spaces)
 
